@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/new/prefix1"/>
+    <qresource prefix="/">
+        <file>zdjecia skal/e07336c_parasol__9__JPG</file>
+        <file>zdjecia skal/satellite-map-showing-dense-forest-jungle-area-highlighting-tree-cover-rivers-trails_1314467-233528.jpg</file>
+        <file>zdjecia skal/turnia-pod-trasy.png</file>
+        <file>zdjecia skal/42462mountain_99130.png</file>
+    </qresource>
+</RCC>
