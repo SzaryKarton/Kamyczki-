@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-
+//123
 project(projektTrasa VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_AUTOUIC ON)
