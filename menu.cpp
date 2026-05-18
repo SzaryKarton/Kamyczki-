@@ -1,6 +1,6 @@
 #include "menu.h"
 #include "ui_menu.h"
-
+#include "nawigator.h"
 Menu::Menu(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Menu)
@@ -16,21 +16,25 @@ Menu::~Menu()
 
 void Menu::on_listaButton_clicked()
 {
-    ;
-    emit requestOpenSecondWidget();
+    MainWindow *glowneOkno = qobject_cast<MainWindow*>(this->window());
+    Nawigator n;
+    n.openWidget(glowneOkno, glowneOkno->theListaSkal);
 }
 
 
-void Menu::on_pushButton_clicked()
+void Menu::on_mapaButton_clicked()
 {
 
-    emit requestOpenMapa();
+
 
 }
 
 
-void Menu::on_pushButton_3_clicked()
+void Menu::on_profilButton_clicked()
 {
-    emit requestOpenProfil();
+    MainWindow *glowneOkno = qobject_cast<MainWindow*>(this->window());
+    Nawigator n;
+    n.openWidget(glowneOkno, glowneOkno->theProfil);
 }
+
 

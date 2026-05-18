@@ -1,6 +1,7 @@
 #include "profil.h"
 #include "ui_profil.h"
-
+#include "nawigator.h"
+#include "datamenager.h"
 Profil::Profil(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Profil)
@@ -24,6 +25,9 @@ Profil::Profil(QWidget *parent)
 
     ui->profile_info->setReadOnly(true);
     ui->accsave_button->setEnabled(false);
+    auto& db = dataManager::instance();
+    ui->nick_label->setText(db.nick);
+    ui->profile_info->setPlainText(db.opis);
 }
 
 Profil::~Profil()
@@ -74,7 +78,9 @@ void Profil::on_accsave_button_clicked()
 
     ui->eq_LineEdit->hide();
     ui->skill_LineEdit->hide();
-
+    auto& db = dataManager::instance();
+    db.nick = ui->nick_label->text();
+    db.opis = ui->profile_info->toPlainText();
     // Wyłączenie przycisku zapisu
     ui->accsave_button->setEnabled(false);
 }
@@ -119,4 +125,11 @@ void Profil::on_remove_eq_clicked()
     {
         delete item;
     }
+}
+
+void Profil::on_cofnijTemp_clicked()
+{
+    MainWindow *glowneOkno = qobject_cast<MainWindow*>(this->window());
+    Nawigator n;
+    n.openWidget(glowneOkno, glowneOkno->theMenu);
 }

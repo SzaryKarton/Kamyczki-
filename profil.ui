@@ -19,7 +19,15 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
+  <widget class="QWidget" name="centralwidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>670</width>
+     <height>866</height>
+    </rect>
+   </property>
    <widget class="QLabel" name="Avatar_label">
     <property name="geometry">
      <rect>
@@ -240,6 +248,19 @@
       </layout>
      </item>
     </layout>
+   </widget>
+   <widget class="QPushButton" name="cofnijTemp">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>340</y>
+      <width>90</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>cofnij temp</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

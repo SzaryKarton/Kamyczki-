@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-//123
+
 project(projektTrasa VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_AUTOUIC ON)
@@ -32,7 +32,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         profil.h profil.cpp
         profil.ui
         rysowanie.h rysowanie.cpp rysowanie.ui
-        lacznik.h lacznik.cpp
+        nawigator.h nawigator.cpp
+        datamenager.h datamenager.cpp
+
+
 
 
 
@@ -86,3 +89,4 @@ install(TARGETS projektTrasa
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(projektTrasa)
 endif()
+add_subdirectory(testy)

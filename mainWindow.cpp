@@ -13,35 +13,13 @@ MainWindow::MainWindow(QWidget *parent)
 
 
 {
-    QWidget* secondWidget = nullptr;
-    Menu* widgetMenu = new Menu(this);
-    ListaSkal* listaSkal = new ListaSkal(nullptr);
-    Skalka* theSkalka = new Skalka(nullptr);
-    Mapa* theMapa = new Mapa(nullptr);
-    Profil* theProfil = new Profil(nullptr);
+    theMenu = new Menu(this); // BEZ słowa "Menu*" na początku!
+    theListaSkal = nullptr;   // BEZ "ListaSkal*"
+    theMapa = nullptr;        // BEZ "Mapa*"
+    theProfil = nullptr;      // BEZ "Profil*"
     ui->setupUi(this);
-    connect(widgetMenu, &Menu::requestOpenMapa, this, [this, theMapa]() {
-        this->openNewWidget(theMapa);
-    });
+    setCentralWidget(theMenu);
 
-    connect(widgetMenu, &Menu::requestOpenSecondWidget, this, [this, listaSkal]() {
-        this->openNewWidget(listaSkal);
-    });
-
-    connect(listaSkal, &ListaSkal::requestOpenSkala, this, [this, theSkalka]() {
-        this->openNewWidget(theSkalka);
-    });
-    this->setCentralWidget(widgetMenu);
-
-    connect(widgetMenu, &Menu::requestOpenProfil, this, [this, theProfil]() {
-        this->openNewWidget(theProfil);
-    });
-    this->setCentralWidget(widgetMenu);
-
-}
-void MainWindow::openNewWidget(QWidget* otworz_ten) {
-    QWidget* secondWidget  = otworz_ten;
-    this->setCentralWidget(secondWidget);
 }
 
 

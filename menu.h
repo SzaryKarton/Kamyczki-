@@ -21,16 +21,13 @@ private slots:
 
     void on_listaButton_clicked();
 
-    void on_pushButton_clicked();
+    void on_mapaButton_clicked();
 
-    void on_pushButton_3_clicked();
+    void on_profilButton_clicked();
 
 private:
     Ui::Menu *ui;
-signals:
-    void requestOpenSecondWidget();
-    void requestOpenMapa();
-    void requestOpenProfil();
+
 };
 
 #endif // MENU_H
