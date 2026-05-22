@@ -25,7 +25,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
 
-        skalka.h skalka.cpp skalka.ui
+
         menu.h menu.cpp menu.ui
         listaskal.h listaskal.cpp listaskal.ui
         mapa.h mapa.cpp mapa.ui
@@ -34,6 +34,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         rysowanie.h rysowanie.cpp rysowanie.ui
         nawigator.h nawigator.cpp
         datamenager.h datamenager.cpp
+        skalkauniversal.h skalkauniversal.cpp skalkauniversal.ui
+
 
 
 

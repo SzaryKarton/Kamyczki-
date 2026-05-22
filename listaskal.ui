@@ -28,57 +28,32 @@
         <height>381</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QPushButton" name="skala1Button">
-         <property name="text">
-          <string>Turnia Nad Parasolem</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>Skarbiec</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_2">
-         <property name="text">
-          <string>Kuferek</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_5">
-         <property name="text">
-          <string>Kołkowa Skała</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_3">
-         <property name="text">
-          <string>Lipna Ściana</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Line" name="line">
-         <property name="orientation">
-          <enum>Qt::Orientation::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_4">
-         <property name="text">
-          <string>Dodaj Skałę</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <widget class="Line" name="line">
+       <property name="geometry">
+        <rect>
+         <x>11</x>
+         <y>117</y>
+         <width>374</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_4">
+       <property name="geometry">
+        <rect>
+         <x>11</x>
+         <y>233</y>
+         <width>96</width>
+         <height>29</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Dodaj Skałę</string>
+       </property>
+      </widget>
      </widget>
     </widget>
    </item>

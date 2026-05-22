@@ -131,5 +131,5 @@ void Profil::on_cofnijTemp_clicked()
 {
     MainWindow *glowneOkno = qobject_cast<MainWindow*>(this->window());
     Nawigator n;
-    n.openWidget(glowneOkno, glowneOkno->theMenu);
+    //n.openWidget(glowneOkno, glowneOkno->theMenu);
 }

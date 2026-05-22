@@ -1,4 +1,4 @@
-#ifndef NAWIGATOR_H
+#ifndef NAWIGATOR_H //nawigator trzeba dodawać do cpp bo program dostanie pierdolca
 #define NAWIGATOR_H
 #include <qwidget.h>
 #include "mainWindow.h"

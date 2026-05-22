@@ -1,10 +1,6 @@
 #include "mainWindow.h"
 #include "./ui_mainWindow.h"
-#include"menu.h"
-#include"skalka.h"
-#include"listaskal.h"
-#include"mapa.h"
-#include "profil.h"
+
 
 MainWindow::MainWindow(QWidget *parent)
 
@@ -13,12 +9,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 
 {
-    theMenu = new Menu(this); // BEZ słowa "Menu*" na początku!
-    theListaSkal = nullptr;   // BEZ "ListaSkal*"
-    theMapa = nullptr;        // BEZ "Mapa*"
-    theProfil = nullptr;      // BEZ "Profil*"
     ui->setupUi(this);
-    setCentralWidget(theMenu);
+
 
 }
 

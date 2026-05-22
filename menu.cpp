@@ -18,7 +18,9 @@ void Menu::on_listaButton_clicked()
 {
     MainWindow *glowneOkno = qobject_cast<MainWindow*>(this->window());
     Nawigator n;
-    n.openWidget(glowneOkno, glowneOkno->theListaSkal);
+    //ListaSkal *do_otwarcia = new ListaSkal;
+    ListaSkal *do_otwarcia = new ListaSkal(glowneOkno);
+    n.openWidget(glowneOkno, do_otwarcia);
 }
 
 
@@ -34,7 +36,7 @@ void Menu::on_profilButton_clicked()
 {
     MainWindow *glowneOkno = qobject_cast<MainWindow*>(this->window());
     Nawigator n;
-    n.openWidget(glowneOkno, glowneOkno->theProfil);
+    //n.openWidget(glowneOkno, glowneOkno->theProfil);
 }
 
 

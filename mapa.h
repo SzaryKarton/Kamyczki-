@@ -17,8 +17,6 @@ public:
 
 private:
     Ui::Mapa *ui;
-signals:
-    void requestOpenSecondWidget(QWidget* ten);
 };
 
 #endif // MAPA_H
