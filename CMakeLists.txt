@@ -33,8 +33,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         profil.ui
         rysowanie.h rysowanie.cpp rysowanie.ui
         nawigator.h nawigator.cpp
-        datamenager.h datamenager.cpp
-        skalkauniversal.h skalkauniversal.cpp skalkauniversal.ui
+        datamanager.h datamanager.cpp
+        skalka.h skalka.cpp skalka.ui
+        trasa.h trasa.cpp trasa.ui
+
 
 
 

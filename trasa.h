@@ -1,0 +1,22 @@
+#ifndef TRASA_H
+#define TRASA_H
+//będzie wyskakiwać jako widget na skalce w ramce :pp
+#include <QWidget>
+
+namespace Ui {
+class Trasa;
+}
+
+class Trasa : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit Trasa(QWidget *parent = nullptr);
+    ~Trasa();
+
+private:
+    Ui::Trasa *ui;
+};
+
+#endif // TRASA_H

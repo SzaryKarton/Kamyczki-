@@ -18,7 +18,6 @@ void Menu::on_listaButton_clicked()
 {
     MainWindow *glowneOkno = qobject_cast<MainWindow*>(this->window());
     Nawigator n;
-    //ListaSkal *do_otwarcia = new ListaSkal;
     ListaSkal *do_otwarcia = new ListaSkal(glowneOkno);
     n.openWidget(glowneOkno, do_otwarcia);
 }

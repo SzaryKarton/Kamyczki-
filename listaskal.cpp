@@ -14,13 +14,15 @@ ListaSkal::ListaSkal(QWidget *parent)
 
     for (int i = 0; i < db.wszystkie_skalki.size(); ++i)
     {
-        SkalkaUniversal* skalka = db.wszystkie_skalki[i];
+        Skalka* skalka = db.wszystkie_skalki[i];
 
         if (skalka != nullptr)
         {
-            // PRZYKŁAD A: Jeśli chcesz dodawać przyciski do układu pionowego (np. ukladSkalek):
-            QPushButton *btn = new QPushButton("Skałka " + QString::number(i + 1), this);
-        ukladPionowy->addWidget(btn);
+            //zmienić nazwę
+            QPushButton *btn = new QPushButton(skalka->nazwa, this);
+            connect(btn, &QPushButton::clicked, this, &ListaSkal::obslugaKliknieciaSkalki);
+            btn->setProperty("indeks_skalki", i);
+            ukladPionowy->addWidget(btn);
         }
 
     }
@@ -29,15 +31,34 @@ ListaSkal::~ListaSkal()
 {
     delete ui;
 }
-void ListaSkal::on_pushButton_4_clicked()
+void ListaSkal::obslugaKliknieciaSkalki()
 {
-    SkalkaUniversal *n_skalka = new SkalkaUniversal;
+    QPushButton *kliknietyGuzik = qobject_cast<QPushButton*>(sender());
+    if (kliknietyGuzik)
+    {
+        int indeksWBazie = kliknietyGuzik->property("indeks_skalki").toInt();
+        MainWindow *glowneOkno = qobject_cast<MainWindow*>(this->window());
+
+        if (glowneOkno)
+        {
+            Skalka *wybranaSkalka = dataManager::instance().wszystkie_skalki[indeksWBazie];
+
+            if (wybranaSkalka != nullptr)
+            {
+                Nawigator n;
+                n.openWidget(glowneOkno, wybranaSkalka);
+            }
+        }
+    }
+}
+
+void ListaSkal::on_dodajSkale_clicked()
+{
+    Skalka *n_skalka = new Skalka;
     dataManager::instance().wszystkie_skalki.append(n_skalka);
     Nawigator n;
     MainWindow *glowneOkno = qobject_cast<MainWindow*>(this->window());
     //ListaSkal *do_otwarcia = new ListaSkal(glowneOkno);
     n.openWidget(glowneOkno, n_skalka);
-
-
 }
 

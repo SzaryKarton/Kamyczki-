@@ -1,6 +1,8 @@
 #ifndef RYSOWANIE_H
 #define RYSOWANIE_H
-
+//dodawanie zdjęcia
+//rysowanie kropek
+//łączenie kropek
 #include <QWidget>
 
 namespace Ui {

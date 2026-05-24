@@ -2,10 +2,10 @@
 #define LISTASKAL_H
 
 #include <QWidget>
-#include "datamenager.h"
+#include "datamanager.h"
 #include "mainWindow.h"
 #include "nawigator.h"
-#include "skalkauniversal.h"
+#include "skalka.h"
 namespace Ui {
 class ListaSkal;
 }
@@ -17,12 +17,12 @@ class ListaSkal : public QWidget
 public:
     explicit ListaSkal(QWidget *parent = nullptr);
     ~ListaSkal();
+    void obslugaKliknieciaSkalki();
 
 private:
     Ui::ListaSkal *ui;
 private slots:
-    //void on_skala1Button_clicked();
-    void on_pushButton_4_clicked();
+    void on_dodajSkale_clicked();
 
 signals:
 void requestOpenSkala();

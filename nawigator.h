@@ -1,4 +1,7 @@
 #ifndef NAWIGATOR_H //nawigator trzeba dodawać do cpp bo program dostanie pierdolca
+//nawigator zajmuje się:
+//zmienianiem okna
+//autozapisem do dokumentu (docelowo)
 #define NAWIGATOR_H
 #include <qwidget.h>
 #include "mainWindow.h"

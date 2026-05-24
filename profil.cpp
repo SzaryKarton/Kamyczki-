@@ -1,7 +1,7 @@
 #include "profil.h"
 #include "ui_profil.h"
 #include "nawigator.h"
-#include "datamenager.h"
+#include "datamanager.h"
 Profil::Profil(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Profil)
@@ -127,9 +127,4 @@ void Profil::on_remove_eq_clicked()
     }
 }
 
-void Profil::on_cofnijTemp_clicked()
-{
-    MainWindow *glowneOkno = qobject_cast<MainWindow*>(this->window());
-    Nawigator n;
-    //n.openWidget(glowneOkno, glowneOkno->theMenu);
-}
+

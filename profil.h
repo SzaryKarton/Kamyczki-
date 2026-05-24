@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QListWidgetItem>
-//#include"nawigator.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -27,7 +27,7 @@ private slots:
     void on_add_eq_clicked();
     void on_remove_eq_clicked();
 
-    void on_cofnijTemp_clicked();
+
 
 private:
     Ui::Profil *ui;
