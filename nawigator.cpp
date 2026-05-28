@@ -9,3 +9,4 @@ void Nawigator::openWidget(
 {
     okno->setCentralWidget(nowyWidget);
 }
+Nawigator::Nawigator() {}

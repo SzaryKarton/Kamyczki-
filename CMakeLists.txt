@@ -41,8 +41,20 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         databasemanager.cpp
         dataManager.h
         dataManager.cpp
-        nawigator.h
-        nawigator.cpp
+        nawigator.h nawigator.cpp
+        trasa.h trasa.cpp trasa.ui
+
+
+
+
+
+
+
+
+
+
+
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET projektTrasa APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -88,3 +100,4 @@ install(TARGETS projektTrasa
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(projektTrasa)
 endif()
+add_subdirectory(testy)

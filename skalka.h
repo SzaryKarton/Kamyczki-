@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QTableWidget>
 #include "mainWindow.h"
+#include "nawigator.h"
 
 
 
