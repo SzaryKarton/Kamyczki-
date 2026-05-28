@@ -26,7 +26,7 @@ private slots:
     void on_remove_skill_clicked();
     void on_add_eq_clicked();
     void on_remove_eq_clicked();
-
+    void on_cofnijTemp_clicked();
 
 
 private:

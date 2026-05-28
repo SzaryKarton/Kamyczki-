@@ -1,4 +1,5 @@
 #include "listaskal.h"
+#include "dataManager.h"
 #include "ui_listaskal.h"
 
 

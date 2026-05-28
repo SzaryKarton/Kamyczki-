@@ -1,7 +1,11 @@
 #include "profil.h"
 #include "ui_profil.h"
 #include "nawigator.h"
+#include "databasemanager.h"
 #include "datamanager.h"
+#include "menu.h"
+#include "mainWindow.h"
+
 Profil::Profil(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Profil)
@@ -25,9 +29,24 @@ Profil::Profil(QWidget *parent)
 
     ui->profile_info->setReadOnly(true);
     ui->accsave_button->setEnabled(false);
+
+    //Database
     auto& db = dataManager::instance();
     ui->nick_label->setText(db.nick);
     ui->profile_info->setPlainText(db.opis);
+
+    ui->skills_ListWidget->clear();
+    ui->eq_ListWidget->clear();
+
+    for(const QString& skill : db.skills)
+    {
+        ui->skills_ListWidget->addItem(skill);
+    }
+
+    for(const QString& eq : db.equipment)
+    {
+        ui->eq_ListWidget->addItem(eq);
+    }
 }
 
 Profil::~Profil()
@@ -78,9 +97,41 @@ void Profil::on_accsave_button_clicked()
 
     ui->eq_LineEdit->hide();
     ui->skill_LineEdit->hide();
+
+    //Database
     auto& db = dataManager::instance();
     db.nick = ui->nick_label->text();
     db.opis = ui->profile_info->toPlainText();
+
+    db.skills.clear();
+
+    for(int i = 0;
+         i < ui->skills_ListWidget->count();
+         i++)
+    {
+        db.skills.append(
+            ui->skills_ListWidget
+                ->item(i)
+                ->text()
+            );
+    }
+
+    db.equipment.clear();
+
+    for(int i = 0;
+         i < ui->eq_ListWidget->count();
+         i++)
+    {
+        db.equipment.append(
+            ui->eq_ListWidget
+                ->item(i)
+                ->text()
+            );
+    }
+
+    DatabaseManager::instance().saveProfile();
+
+
     // Wyłączenie przycisku zapisu
     ui->accsave_button->setEnabled(false);
 }
@@ -127,4 +178,20 @@ void Profil::on_remove_eq_clicked()
     }
 }
 
+void Profil::on_cofnijTemp_clicked() {
+    MainWindow *glowneOkno =
+        qobject_cast<MainWindow*>(
+            this->window()
+            );
+
+    Nawigator n;
+
+    Menu *do_otwarcia =
+        new Menu(glowneOkno);
+
+    n.openWidget(
+        glowneOkno,
+        do_otwarcia
+        );
+}
 
