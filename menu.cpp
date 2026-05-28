@@ -35,7 +35,8 @@ void Menu::on_profilButton_clicked()
 {
     MainWindow *glowneOkno = qobject_cast<MainWindow*>(this->window());
     Nawigator n;
-    //n.openWidget(glowneOkno, glowneOkno->theProfil);
+    Profil *do_otwarcia = new Profil(glowneOkno);
+    n.openWidget(glowneOkno, do_otwarcia);
 }
 
 

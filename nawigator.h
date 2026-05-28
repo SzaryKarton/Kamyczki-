@@ -16,7 +16,7 @@ public:
 };
 
 #endif
-#ifndef NAWIGATOR_H //nawigator trzeba dodawać do cpp bo program dostanie pierdolca
+//#ifndef NAWIGATOR_H //nawigator trzeba dodawać do cpp bo program dostanie pierdolca
 //nawigator zajmuje się:
 //zmienianiem okna
 //autozapisem do dokumentu (docelowo)

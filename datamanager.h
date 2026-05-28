@@ -18,6 +18,8 @@ public:
     QVector<Skalka*> wszystkie_skalki;
     QString nick = "Twój Nick";
     QString opis = "";
+    QVector<QString> skills;
+    QVector<QString> equipment;
 
 
 
