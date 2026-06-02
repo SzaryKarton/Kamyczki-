@@ -21,11 +21,14 @@ public:
     QVector<QString> skills;
     QVector<QString> equipment;
 
+    //SKAŁKI
+
+
 
 
 
 private:
-    dataManager() = default; // Ukrywamy konstruktor, żeby nikt nie zrobił "new DataManager"
+    dataManager() = default;
     dataManager(const dataManager&) = delete;
 };
 

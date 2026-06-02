@@ -14,6 +14,10 @@ class Trasa : public QWidget
 public:
     explicit Trasa(QWidget *parent = nullptr);
     ~Trasa();
+    QString nazwa;
+    QString trudnosc;
+    QString asekuracja;
+    QString wpinki;
 
 private:
     Ui::Trasa *ui;

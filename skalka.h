@@ -5,6 +5,7 @@
 #include <QTableWidget>
 #include "mainWindow.h"
 #include "nawigator.h"
+#include "trasa.h"
 
 
 
@@ -23,12 +24,14 @@ public:
     QString wspolrzedne;
     QString rodzaj_skaly;
     int wysokosc;
-    QVector<QString> trasy;
-
+    QVector<Trasa*> trasy;
+    void ustawDane(Skalka* daneSkalki);
 private slots:
     void on_edytuj_clicked();
     void on_tabela_itemChanged(QTableWidgetItem *item);
     void on_cofnij_clicked();
+
+    void on_zapisz_clicked();
 
 private:
     Ui::Skalka *ui;

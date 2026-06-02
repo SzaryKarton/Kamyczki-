@@ -46,7 +46,7 @@
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0">
+       <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0,0">
         <property name="spacing">
          <number>4</number>
         </property>
@@ -57,6 +57,13 @@
          <widget class="QPushButton" name="edytuj">
           <property name="text">
            <string>Edytuj</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="zapisz">
+          <property name="text">
+           <string>zapisz</string>
           </property>
          </widget>
         </item>

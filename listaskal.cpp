@@ -1,6 +1,7 @@
 #include "listaskal.h"
 #include "dataManager.h"
 #include "ui_listaskal.h"
+#include "databasemanager.h"
 
 
 ListaSkal::ListaSkal(QWidget *parent)
@@ -8,11 +9,11 @@ ListaSkal::ListaSkal(QWidget *parent)
     , ui(new Ui::ListaSkal)
 {
     ui->setupUi(this);
-
     auto& db = dataManager::instance();
+    auto& wczytaj_stad = DatabaseManager:: instance();
     QVBoxLayout *ukladPionowy = new QVBoxLayout(ui->scrollAreaWidgetContents);
-    ukladPionowy->setAlignment(Qt::AlignTop); // Przyciski będą się układać od góry
-
+    ukladPionowy->setAlignment(Qt::AlignTop);
+    db.wszystkie_skalki = wczytaj_stad.wczytajSkalki();
     for (int i = 0; i < db.wszystkie_skalki.size(); ++i)
     {
         Skalka* skalka = db.wszystkie_skalki[i];
@@ -42,12 +43,15 @@ void ListaSkal::obslugaKliknieciaSkalki()
 
         if (glowneOkno)
         {
-            Skalka *wybranaSkalka = dataManager::instance().wszystkie_skalki[indeksWBazie];
+
+            ::Skalka *wybranaSkalka = dataManager::instance().wszystkie_skalki[indeksWBazie];
 
             if (wybranaSkalka != nullptr)
             {
+                class Skalka *ekranSkalki = new class Skalka(nullptr);
+                ekranSkalki->ustawDane(wybranaSkalka);
                 Nawigator n;
-                n.openWidget(glowneOkno, wybranaSkalka);
+                n.openWidget(glowneOkno, ekranSkalki);
             }
         }
     }
@@ -55,7 +59,7 @@ void ListaSkal::obslugaKliknieciaSkalki()
 
 void ListaSkal::on_dodajSkale_clicked()
 {
-    Skalka *n_skalka = new Skalka;
+    Skalka *n_skalka = new Skalka(nullptr);
     dataManager::instance().wszystkie_skalki.append(n_skalka);
     Nawigator n;
     MainWindow *glowneOkno = qobject_cast<MainWindow*>(this->window());
