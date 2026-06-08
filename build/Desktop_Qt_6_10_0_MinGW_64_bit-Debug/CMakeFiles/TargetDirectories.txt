@@ -1,9 +1,0 @@
-E:/Users/damia/Documents/Kamyczki--main/build/Desktop_Qt_6_10_0_MinGW_64_bit-Debug/CMakeFiles/projektTrasa.dir
-E:/Users/damia/Documents/Kamyczki--main/build/Desktop_Qt_6_10_0_MinGW_64_bit-Debug/CMakeFiles/edit_cache.dir
-E:/Users/damia/Documents/Kamyczki--main/build/Desktop_Qt_6_10_0_MinGW_64_bit-Debug/CMakeFiles/rebuild_cache.dir
-E:/Users/damia/Documents/Kamyczki--main/build/Desktop_Qt_6_10_0_MinGW_64_bit-Debug/CMakeFiles/list_install_components.dir
-E:/Users/damia/Documents/Kamyczki--main/build/Desktop_Qt_6_10_0_MinGW_64_bit-Debug/CMakeFiles/install.dir
-E:/Users/damia/Documents/Kamyczki--main/build/Desktop_Qt_6_10_0_MinGW_64_bit-Debug/CMakeFiles/install/local.dir
-E:/Users/damia/Documents/Kamyczki--main/build/Desktop_Qt_6_10_0_MinGW_64_bit-Debug/CMakeFiles/install/strip.dir
-E:/Users/damia/Documents/Kamyczki--main/build/Desktop_Qt_6_10_0_MinGW_64_bit-Debug/CMakeFiles/projektTrasa_autogen_timestamp_deps.dir
-E:/Users/damia/Documents/Kamyczki--main/build/Desktop_Qt_6_10_0_MinGW_64_bit-Debug/CMakeFiles/projektTrasa_autogen.dir
