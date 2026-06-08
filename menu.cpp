@@ -1,0 +1,43 @@
+#include "menu.h"
+#include "ui_menu.h"
+#include "nawigator.h"
+Menu::Menu(QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::Menu)
+{
+    ui->setupUi(this);
+}
+Menu::~Menu()
+{
+    delete ui;
+}
+
+
+
+void Menu::on_listaButton_clicked()
+{
+    MainWindow *glowneOkno = qobject_cast<MainWindow*>(this->window());
+    Nawigator n;
+    ListaSkal *do_otwarcia = new ListaSkal(glowneOkno);
+    n.openWidget(glowneOkno, do_otwarcia);
+}
+
+
+void Menu::on_mapaButton_clicked()
+{
+    MainWindow *glowneOkno = qobject_cast<MainWindow*>(this->window());
+    Nawigator n;
+    Mapa *do_otwarcia = new Mapa(glowneOkno);
+    n.openWidget(glowneOkno, do_otwarcia);
+}
+
+
+void Menu::on_profilButton_clicked()
+{
+    MainWindow *glowneOkno = qobject_cast<MainWindow*>(this->window());
+    Nawigator n;
+    Profil *do_otwarcia = new Profil(glowneOkno);
+    n.openWidget(glowneOkno, do_otwarcia);
+}
+
+
