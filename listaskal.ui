@@ -24,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>396</width>
-        <height>381</height>
+        <width>400</width>
+        <height>385</height>
        </rect>
       </property>
       <widget class="Line" name="line">
@@ -52,6 +52,19 @@
        </property>
        <property name="text">
         <string>Dodaj Skałę</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="backButton">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>330</y>
+         <width>101</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Powrót</string>
        </property>
       </widget>
      </widget>

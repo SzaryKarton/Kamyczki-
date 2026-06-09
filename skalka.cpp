@@ -1,8 +1,10 @@
 #include "skalka.h"
 #include "ui_skalka.h"
 #include "listaskal.h"
+
 #include "datamanager.h"
 #include "databasemanager.h"
+#include "trasa.h"
 
 Skalka::Skalka(QWidget *parent)
     : QWidget(parent)
@@ -10,6 +12,21 @@ Skalka::Skalka(QWidget *parent)
 {
     ui->setupUi(this);
     ui->tabela->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    QVBoxLayout *ukladPionowy = ui->trasyBox;
+    ukladPionowy->setAlignment(Qt::AlignTop);
+    for (int i = 0; i < this->trasy.size(); ++i)
+    {
+        Trasa* trasa = this->trasy[i];
+
+        if (trasa != nullptr)
+        {
+            //zmienić nazwę
+            QPushButton *btn = new QPushButton(trasa->nazwa, this);
+            //connect(btn, &QPushButton::clicked, this, &ListaSkal::obslugaKliknieciaSkalki);
+            btn->setProperty("indeks_trasy", i);
+            ukladPionowy->addWidget(btn);
+        }
+    }
 }
 
 Skalka::~Skalka()
@@ -125,5 +142,31 @@ void Skalka::ustawDane(::Skalka* daneSkalki)
 
     // 4. Współrzędne (Wiersz 3, Kolumna 1)
     ui->tabela->setItem(3, 1, new QTableWidgetItem(daneSkalki->wspolrzedne));
+}
+
+
+void Skalka::on_dodajTrase_clicked()
+{
+    qDebug() << "KLIKNIETO PRZYCISK DODAJ TRASE!";
+    int index = dataManager::instance().wszystkie_skalki.indexOf(this);
+    //QFrame *ramka = qobject_cast<QFrame*>(ui->daneTrasy->layout());
+    QFrame *ramka = ui->daneTrasy;
+    Trasa *n_trasa = new Trasa(this);
+    this->trasy.append(n_trasa);
+    Nawigator n;
+    //ListaSkal *do_otwarcia = new ListaSkal(glowneOkno);
+    n_trasa->setParent(ramka);
+    n.openInFrameTrasa(ramka, n_trasa);
+    n_trasa->show();
+    this->update();
+
+    QVBoxLayout *box = ui->trasyBox;
+    QPushButton *btn = new QPushButton("test", this);
+    //connect(btn, &QPushButton::clicked, this, &ListaSkal::obslugaKliknieciaSkalki);
+    //btn->setProperty("indeks_trasy", i);
+    box->addWidget(btn);
+    this->update();
+    dataManager::instance().wszystkie_skalki[index] = this;
+
 }
 

@@ -17,6 +17,9 @@ public:
 
 private:
     Ui::Mapa *ui;
+
+private slots:
+    void on_backButton_clicked();
 };
 
 #endif // MAPA_H

@@ -25,9 +25,10 @@ void Menu::on_listaButton_clicked()
 
 void Menu::on_mapaButton_clicked()
 {
-
-
-
+    MainWindow *glowneOkno = qobject_cast<MainWindow*>(this->window());
+    Nawigator n;
+    Mapa *do_otwarcia = new Mapa(glowneOkno);
+    n.openWidget(glowneOkno, do_otwarcia);
 }
 
 

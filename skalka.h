@@ -33,6 +33,8 @@ private slots:
 
     void on_zapisz_clicked();
 
+    void on_dodajTrase_clicked();
+
 private:
     Ui::Skalka *ui;
 };
