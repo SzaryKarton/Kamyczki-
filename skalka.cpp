@@ -1,15 +1,42 @@
 #include "skalka.h"
 #include "ui_skalka.h"
 #include "listaskal.h"
+
 #include "datamanager.h"
 #include "databasemanager.h"
-
-Skalka::Skalka(QWidget *parent)
-    : QWidget(parent)
-    , ui(new Ui::Skalka)
+#include "trasa.h"
+Skalka::Skalka(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::Skalka)
 {
     ui->setupUi(this);
     ui->tabela->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    // Tutaj nie dajemy pętli generującej przyciski, bo baza danych sama uzupełni obiekt później
+}
+
+Skalka::Skalka(const QVector<Trasa*>& wczytaneTrasy,QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::Skalka)
+{
+    this->trasy = wczytaneTrasy;
+    ui->setupUi(this);
+    ui->tabela->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    QVBoxLayout *ukladPionowy = ui->trasyBox;
+    ukladPionowy->setAlignment(Qt::AlignTop);
+    for (int i = 0; i < this->trasy.size(); ++i)
+    {
+        Trasa* trasa = this->trasy[i];
+
+        if (trasa != nullptr)
+        {
+            //zmienić nazwę
+            QPushButton *btn = new QPushButton("nazwa", this);
+            connect(btn, &QPushButton::clicked, this, &Skalka::obslugaKliknieciaTrasy);
+            btn->setProperty("indeks_trasy", i);
+            ukladPionowy->addWidget(btn);
+            btn->show();
+        }
+    }
 }
 
 Skalka::~Skalka()
@@ -17,7 +44,29 @@ Skalka::~Skalka()
     delete ui;
 }
 
+void Skalka::obslugaKliknieciaTrasy() {
+    qDebug() << "=== KLIKNIETO TRASE ===";
+    QPushButton *kliknietyGuzik = qobject_cast<QPushButton*>(sender());
 
+    if (kliknietyGuzik) {
+        int indeksWBazie = kliknietyGuzik->property("indeks_trasy").toInt();
+        QFrame *ramka = ui->daneTrasy;
+
+        if (ramka) {
+            // Wyciągamy dokładnie tę trasę, która została kliknięta
+            Trasa *wybranaTrasa = this->trasy[indeksWBazie];
+
+            if (wybranaTrasa != nullptr) {
+                // Twój oryginalny, działający schemat nawigacji
+                wybranaTrasa->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+                wybranaTrasa->setMinimumSize(0, 0);
+                Nawigator n;
+                wybranaTrasa->setParent(ramka);
+                n.openInFrameTrasa(ramka, wybranaTrasa);
+                wybranaTrasa->show();
+            }
+            this->update();}}
+}
 
 void Skalka::on_edytuj_clicked()
 {
@@ -125,5 +174,85 @@ void Skalka::ustawDane(::Skalka* daneSkalki)
 
     // 4. Współrzędne (Wiersz 3, Kolumna 1)
     ui->tabela->setItem(3, 1, new QTableWidgetItem(daneSkalki->wspolrzedne));
+}
+/*void Skalka::on_dodajTrase_clicked()
+{
+    qDebug() << "=== KLIKNIETO PRZYCISK DODAJ TRASE! ===";
+
+    QFrame *ramka = ui->daneTrasy;
+    if (!ramka) return;
+
+    // 1. Zapewnienie poprawnego układu pionowego w ramce
+    if (ramka->layout() == nullptr) {
+        QVBoxLayout *nowyLayout = new QVBoxLayout(ramka);
+        nowyLayout->setContentsMargins(0, 0, 0, 0);
+        nowyLayout->setSpacing(0);
+        ramka->setLayout(nowyLayout);
+    }
+
+    // 2. Dynamiczne tworzenie nowej trasy i przypisanie do wektora skałki
+    Trasa *n_trasa = new Trasa(ramka);
+    this->trasy.append(n_trasa);
+
+    // 3. Rozciąganie i dopasowanie widoku do ramki
+    ramka->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    n_trasa->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    Nawigator n;
+    n.openInFrameTrasa(ramka, n_trasa);
+    ramka->layout()->addWidget(n_trasa);
+
+    n_trasa->show();
+    ramka->update();
+    this->update();
+
+    // 4. BEZPIECZNA AKTUALIZACJA W DATAMANAGER (Zabezpieczenie przed crashem)
+    int index = dataManager::instance().wszystkie_skalki.indexOf(this);
+    if (index >= 0) {
+        dataManager::instance().wszystkie_skalki[index] = this;
+    } else {
+        dataManager::instance().wszystkie_skalki.append(this);
+    }
+
+    // 5. Trwały zapis struktury do bazy danych SQLite
+    DatabaseManager::instance().saveSkalka(dataManager::instance().wszystkie_skalki);
+}
+*/
+
+void Skalka::on_dodajTrase_clicked()
+{
+    qDebug() << "KLIKNIETO PRZYCISK DODAJ TRASE!";
+    int index = dataManager::instance().wszystkie_skalki.indexOf(this);
+
+    QFrame *ramka = ui->daneTrasy;
+    Trasa *n_trasa = new Trasa(this);
+    this->trasy.append(n_trasa);
+    Nawigator n;
+    //ListaSkal *do_otwarcia = new ListaSkal(glowneOkno);
+    n_trasa->setParent(ramka);
+    n_trasa->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    n_trasa->setMinimumSize(0, 0);
+    n.openInFrameTrasa(ramka, n_trasa);
+    n_trasa->show();
+    this->update();
+
+    QVBoxLayout *box = ui->trasyBox;
+    QPushButton *btn = new QPushButton("test", this);
+    //connect(btn, &QPushButton::clicked, this, &ListaSkal::obslugaKliknieciaSkalki);
+    //btn->setProperty("indeks_trasy", i);
+    int aktualnyIndeks = this->trasy.size() - 1;
+    btn->setProperty("indeks_trasy", aktualnyIndeks);
+
+    // Łączymy kliknięcie w ten nowy przycisk z Twoją metodą otwierania szczegółów trasy
+    connect(btn, &QPushButton::clicked, this, &Skalka::obslugaKliknieciaTrasy);
+    box->addWidget(btn);
+    this->update();
+    if (index >= 0) {
+        dataManager::instance().wszystkie_skalki[index] = this;
+    } else {
+        dataManager::instance().wszystkie_skalki.append(this);
+    }
+    //dataManager::instance().wszystkie_skalki[index] = this;
+
 }
 

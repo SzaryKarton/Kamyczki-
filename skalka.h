@@ -19,6 +19,8 @@ class Skalka : public QWidget
 
 public:
     explicit Skalka(QWidget *parent = nullptr);
+    explicit Skalka(const QVector<Trasa*>& wczytaneTrasy, QWidget *parent = nullptr);
+
     ~Skalka();
     QString nazwa = "";
     QString wspolrzedne;
@@ -26,12 +28,15 @@ public:
     int wysokosc;
     QVector<Trasa*> trasy;
     void ustawDane(Skalka* daneSkalki);
+    void obslugaKliknieciaTrasy();
 private slots:
     void on_edytuj_clicked();
     void on_tabela_itemChanged(QTableWidgetItem *item);
     void on_cofnij_clicked();
 
     void on_zapisz_clicked();
+
+    void on_dodajTrase_clicked();
 
 private:
     Ui::Skalka *ui;

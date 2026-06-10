@@ -6,6 +6,7 @@
 #include "mainWindow.h"
 #include "nawigator.h"
 #include "skalka.h"
+
 namespace Ui {
 class ListaSkal;
 }
@@ -23,9 +24,10 @@ private:
     Ui::ListaSkal *ui;
 private slots:
     void on_dodajSkale_clicked();
+    void on_backButton_clicked();
 
 signals:
-void requestOpenSkala();
+    void requestOpenSkala();
 };
 
 

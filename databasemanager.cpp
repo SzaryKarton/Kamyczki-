@@ -72,7 +72,7 @@ void DatabaseManager::createTables() {
     query.exec(
         "CREATE TABLE IF NOT EXISTS trasy ("
         "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-        "id_skalki INTEGER,"
+        "skalka_nazwa TEXT,"
         "nazwa TEXT,"
         "trudnosc TEXT,"
         "asekuracja TEXT,"
@@ -215,50 +215,112 @@ void DatabaseManager::loadProfile()
     }
 }
 
-void DatabaseManager::saveSkalka(const QVector<Skalka*>& listaSkalek){
-    auto& data = dataManager::instance();
+void DatabaseManager::saveSkalka(const QVector<Skalka*>& listaSkalek) {
     QSqlQuery query;
+
+    // Czyszczenie starych rekordów, aby uniknąć duplikatów i błędów indeksowania
     query.exec("DELETE FROM skalki");
-    for (Skalka* skalka : listaSkalek){
-    query.prepare("INSERT INTO skalki(wspolrzedne, nazwa, wysokosc, rodzaj_skaly) VALUES (?, ?, ?,?)");
-    query.addBindValue(skalka->wspolrzedne);
-    query.addBindValue(skalka->nazwa);
-    query.addBindValue(skalka->wysokosc);
-    query.addBindValue(skalka->rodzaj_skaly);
+    query.exec("DELETE FROM trasy");
 
-    if (!query.exec()) {
-        qDebug() << "Błąd zapisu pojedynczej skałki:" << query.lastError().text();
+    for (Skalka* skalka : listaSkalek) {
+        // BEZPIECZEŃSTWO: Jeśli wskaźnik jest pusty, pomijamy go, żeby uniknąć crashu
+        if (!skalka) {
+            qDebug() << "Ominięto pusty wskaźnik skałki!";
+            continue;
+        }
+
+        // 1. Zapisujemy skałkę
+        query.prepare(
+            "INSERT INTO skalki (wspolrzedne, nazwa, wysokosc, rodzaj_skaly) "
+            "VALUES (?, ?, ?, ?)"
+            );
+        query.addBindValue(skalka->wspolrzedne);
+        query.addBindValue(skalka->nazwa);
+        query.addBindValue(skalka->wysokosc);
+        query.addBindValue(skalka->rodzaj_skaly);
+
+        if (!query.exec()) {
+            qDebug() << "Błąd zapisu skałki:" << query.lastError().text();
+            continue;
+        }
+
+        // 2. Zapisujemy trasy należące DO TEJ konkretnej skałki
+        for (int i = 0; i < skalka->trasy.size(); ++i) {
+            // BEZPIECZEŃSTWO: Dokładnie weryfikujemy indeks trasy przed pobraniem
+            Trasa* trasa = skalka->trasy.at(i);
+            if (!trasa) continue;
+
+            query.prepare(
+                "INSERT INTO trasy (skalka_nazwa, nazwa, trudnosc, asekuracja, wpinki) "
+                "VALUES (?, ?, ?, ?, ?)"
+                );
+            query.addBindValue(skalka->nazwa);
+            query.addBindValue(trasa->nazwa);
+            query.addBindValue(trasa->trudnosc);
+            query.addBindValue(trasa->asekuracja);
+            query.addBindValue(trasa->wpinki);
+
+            if (!query.exec()) {
+                qDebug() << "Błąd zapisu trasy dla skałki" << skalka->nazwa << ":" << query.lastError().text();
+            }
+        }
     }
+
     QSqlDatabase::database().commit();
-    qDebug() << "Zapisano pomyślnie wszystkie skałki do bazy!";
-}
+    qDebug() << "Zapisano pomyślnie wszystkie skałki i ich drogi do bazy!";
 }
 
-QVector<Skalka*> DatabaseManager::wczytajSkalki()
-{
+
+QVector<Skalka*> DatabaseManager::wczytajSkalki() {
     QVector<Skalka*> listaSkalek;
     QSqlQuery query;
 
-    // Pobieramy dane bezpośrednio z Twojej połączonej tabeli 'skalki'
     if (query.exec("SELECT wspolrzedne, nazwa, wysokosc, rodzaj_skaly FROM skalki")) {
         while (query.next()) {
-
-            // Tworzymy nowy, czysty obiekt skałki w pamięci RAM
             Skalka* nowaSkalka = new Skalka();
-
-            // Odbudowujemy atrybuty z kolejnych kolumn (od 0 do 3)
-            nowaSkalka->wspolrzedne = query.value(0).toString();
-            nowaSkalka->nazwa       = query.value(1).toString();
-            nowaSkalka->wysokosc    = query.value(2).toInt();
+            nowaSkalka->wspolrzedne  = query.value(0).toString();
+            nowaSkalka->nazwa        = query.value(1).toString();
+            nowaSkalka->wysokosc     = query.value(2).toInt();
             nowaSkalka->rodzaj_skaly = query.value(3).toString();
 
-            // Wrzucamy gotową skałkę do wektora
+            // --- DOCZEPIANIE TRAS ---
+            QSqlQuery trasaQuery;
+            trasaQuery.prepare("SELECT nazwa, trudnosc, asekuracja, wpinki FROM trasy WHERE skalka_nazwa = ?");
+            trasaQuery.addBindValue(nowaSkalka->nazwa);
+
+            if (trasaQuery.exec()) {
+                while (trasaQuery.next()) {
+                    Trasa* nowaTrasa = new Trasa();
+                    nowaTrasa->nazwa      = trasaQuery.value(0).toString();
+                    nowaTrasa->trudnosc   = trasaQuery.value(1).toString();
+                    nowaTrasa->asekuracja = trasaQuery.value(2).toString();
+                    nowaTrasa->wpinki     = trasaQuery.value(3).toString();
+
+                    // Wrzucamy wskaźnik do wektora w skałce
+                    nowaSkalka->trasy.append(nowaTrasa);
+                }
+            } else {
+                qDebug() << "Błąd pobierania tras dla:" << nowaSkalka->nazwa << trasaQuery.lastError().text();
+            }
+            // ------------------------
+
             listaSkalek.append(nowaSkalka);
         }
-        qDebug() << "Wczytano pomyślnie" << listaSkalek.size() << "skałek (bez tras).";
+        qDebug() << "Wczytano pomyślnie" << listaSkalek.size() << "skałek wraz z trasami:";
+        int t = 0;
+        for(Skalka* skalka : listaSkalek){
+            qDebug() << "skalka" << listaSkalek[t]->nazwa;
+            t++;
+            int k = 0;
+            for(Trasa* trasa: skalka->trasy){
+                Trasa* to = skalka->trasy[k];
+                qDebug() << to->nazwa << "!";
+                k++;
+            }
+        }
     } else {
-        qDebug() << "Błąd podczas wczytywania samych skałek:" << query.lastError().text();
+        qDebug() << "Błąd główny wczytywania skałek:" << query.lastError().text();
     }
 
-    return listaSkalek; // Zwracamy gotową listę obiektów
+    return listaSkalek;
 }

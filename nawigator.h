@@ -2,9 +2,10 @@
 #define NAWIGATOR_H
 
 #include <QWidget>
+#include <QFrame>
 
 class MainWindow;
-
+class Trasa;
 class Nawigator
 {
 public:
@@ -12,6 +13,10 @@ public:
     void openWidget(
         MainWindow *okno,
         QWidget *nowyWidget
+        );
+    void openInFrameTrasa(
+        QFrame *targetFrame,
+        Trasa *widgetPointer
         );
 };
 

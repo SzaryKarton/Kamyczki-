@@ -21,6 +21,10 @@ public:
 
 private:
     Ui::Trasa *ui;
+private slots:
+    // Sloty obsługujące kliknięcia przycisków z UI
+    void on_edytujButton_clicked();
+    void on_zapiszButton_clicked();
 };
 
 #endif // TRASA_H

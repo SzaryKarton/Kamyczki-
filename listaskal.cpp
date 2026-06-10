@@ -1,8 +1,10 @@
 #include "listaskal.h"
-#include "dataManager.h"
+#include "datamanager.h"
 #include "ui_listaskal.h"
 #include "databasemanager.h"
-
+#include "menu.h"
+#include "mainWindow.h"
+#include "nawigator.h"
 
 ListaSkal::ListaSkal(QWidget *parent)
     : QWidget(parent)
@@ -48,7 +50,7 @@ void ListaSkal::obslugaKliknieciaSkalki()
 
             if (wybranaSkalka != nullptr)
             {
-                class Skalka *ekranSkalki = new class Skalka(nullptr);
+                Skalka *ekranSkalki = new Skalka(wybranaSkalka->trasy,nullptr);
                 ekranSkalki->ustawDane(wybranaSkalka);
                 Nawigator n;
                 n.openWidget(glowneOkno, ekranSkalki);
@@ -66,4 +68,19 @@ void ListaSkal::on_dodajSkale_clicked()
     //ListaSkal *do_otwarcia = new ListaSkal(glowneOkno);
     n.openWidget(glowneOkno, n_skalka);
 }
+void ListaSkal::on_backButton_clicked() {
+    MainWindow *glowneOkno =
+        qobject_cast<MainWindow*>(
+            this->window()
+            );
 
+    Nawigator n;
+
+    Menu *do_otwarcia =
+        new Menu(glowneOkno);
+
+    n.openWidget(
+        glowneOkno,
+        do_otwarcia
+        );
+}
