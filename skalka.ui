@@ -41,6 +41,19 @@
          <property name="frameShadow">
           <enum>QFrame::Shadow::Raised</enum>
          </property>
+         <widget class="QLabel" name="zdjecie_label">
+          <property name="geometry">
+           <rect>
+            <x>2</x>
+            <y>-1</y>
+            <width>501</width>
+            <height>581</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
         </widget>
        </item>
        <item>
@@ -55,13 +68,20 @@
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0,0">
+        <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0,0,0">
          <property name="spacing">
           <number>4</number>
          </property>
          <property name="sizeConstraint">
           <enum>QLayout::SizeConstraint::SetFixedSize</enum>
          </property>
+         <item>
+          <widget class="QPushButton" name="dodajZdjecie">
+           <property name="text">
+            <string>Dodaj Zdjęcie</string>
+           </property>
+          </widget>
+         </item>
          <item>
           <widget class="QPushButton" name="edytuj">
            <property name="text">

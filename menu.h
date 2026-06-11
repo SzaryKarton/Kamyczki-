@@ -1,3 +1,4 @@
+//i jeszcze jeden i jeszcze raz
 #ifndef MENU_H
 #define MENU_H
 #include "mapa.h"

@@ -19,15 +19,15 @@ class Skalka : public QWidget
 
 public:
     explicit Skalka(QWidget *parent = nullptr);
-    explicit Skalka(const QVector<Trasa*>& wczytaneTrasy, QWidget *parent = nullptr);
-
     ~Skalka();
+    QString sciezka_zdjecia;
     QString nazwa = "";
     QString wspolrzedne;
     QString rodzaj_skaly;
     int wysokosc;
     QVector<Trasa*> trasy;
     void ustawDane(Skalka* daneSkalki);
+    void odpal_trasy(Skalka* skalka);
     void obslugaKliknieciaTrasy();
 private slots:
     void on_edytuj_clicked();
@@ -37,6 +37,8 @@ private slots:
     void on_zapisz_clicked();
 
     void on_dodajTrase_clicked();
+
+    void on_dodajZdjecie_clicked();
 
 private:
     Ui::Skalka *ui;

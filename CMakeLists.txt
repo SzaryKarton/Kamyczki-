@@ -42,7 +42,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         dataManager.h
         dataManager.cpp
         nawigator.h nawigator.cpp
-        trasa.h trasa.cpp trasa.ui
+        trasa.h trasa.cpp
+        trasa.ui
+
 
 
 

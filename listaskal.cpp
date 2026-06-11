@@ -29,6 +29,7 @@ ListaSkal::ListaSkal(QWidget *parent)
             ukladPionowy->addWidget(btn);
         }
 
+
     }
 }
 ListaSkal::~ListaSkal()
@@ -50,10 +51,11 @@ void ListaSkal::obslugaKliknieciaSkalki()
 
             if (wybranaSkalka != nullptr)
             {
-                Skalka *ekranSkalki = new Skalka(wybranaSkalka->trasy,nullptr);
+                Skalka *ekranSkalki = new Skalka(nullptr);
                 ekranSkalki->ustawDane(wybranaSkalka);
                 Nawigator n;
                 n.openWidget(glowneOkno, ekranSkalki);
+                ekranSkalki->odpal_trasy(ekranSkalki);
             }
         }
     }

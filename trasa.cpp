@@ -1,5 +1,7 @@
 #include "trasa.h"
 #include "ui_trasa.h"
+#include "databasemanager.h"
+#include "datamanager.h"
 #include <QDebug>
 
 Trasa::Trasa(QWidget *parent)
@@ -8,19 +10,16 @@ Trasa::Trasa(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // Domyslnie blokujemy pola do edycji przy otwarciu widoku
     ui->nazwa->setReadOnly(true);
     ui->trudnosc->setReadOnly(true);
     ui->wpinki->setReadOnly(true);
     ui->asekuracja->setReadOnly(true);
 
-    // Przycisk Zapisz jest domyslnie wylaczony, dopoki nie klikniemy Edytuj
     ui->zapiszButton->setEnabled(false);
 
-    // Synchronizacja z wewnetrznymi danymi obiektu (jeśli wczytano z bazy)
     ui->nazwa->setText(this->nazwa);
     ui->trudnosc->setText(this->trudnosc);
-    ui->wpinki->setText(this->wpinki); // Używa zmiennej wspinki z trasa.h
+    ui->wpinki->setText(this->wpinki);
     ui->asekuracja->setText(this->asekuracja);
 }
 
@@ -31,32 +30,33 @@ Trasa::~Trasa()
 
 void Trasa::on_edytujButton_clicked()
 {
-    // Odblokowanie pol tekstowych do edycji
     ui->nazwa->setReadOnly(false);
     ui->trudnosc->setReadOnly(false);
     ui->wpinki->setReadOnly(false);
     ui->asekuracja->setReadOnly(false);
 
-    // Aktywacja przycisku Zapisz
     ui->zapiszButton->setEnabled(true);
 }
 
 void Trasa::on_zapiszButton_clicked()
 {
-    // Zapisujemy wpisane teksty z UI z powrotem do zmiennych obiektu
     this->nazwa = ui->nazwa->text();
     this->trudnosc = ui->trudnosc->text();
-    this->wpinki = ui->wpinki->text(); // Zapis do zmiennej strukturalnej wspinki
+    this->wpinki = ui->wpinki->text();
     this->asekuracja = ui->asekuracja->text();
 
-    // Ponowne zablokowanie pol tekstowych
     ui->nazwa->setReadOnly(true);
     ui->trudnosc->setReadOnly(true);
     ui->wpinki->setReadOnly(true);
     ui->asekuracja->setReadOnly(true);
 
-    // Wylaczenie przycisku zapisu
     ui->zapiszButton->setEnabled(false);
 
     qDebug() << "Dane trasy zaktualizowane w obiekcie:" << this->nazwa;
+
+    // Automatyczny trwały zapis do pliku bazy danych
+    DatabaseManager::instance().saveSkalka(dataManager::instance().wszystkie_skalki);
+
+    // Zamyka pop-up i płynnie wraca do widoku skałki
+    this->close();
 }
