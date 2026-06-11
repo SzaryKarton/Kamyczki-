@@ -103,23 +103,44 @@ void Skalka::on_cofnij_clicked()
         qDebug() << "Błąd: Nie udało się odnaleźć głównego okna!";
         return;
     }
-
+    //int index = dataManager::instance().wszystkie_skalki.indexOf(this);
+    //if(this->usun == true){
+    //    dataManager::instance().wszystkie_skalki.removeAt(index);
     Nawigator n;
+    //DatabaseManager::instance().saveSkalka(dataManager::instance().wszystkie_skalki); ///
     ListaSkal *do_otwarcia = new ListaSkal(nullptr);
     n.openWidget(glowneOkno, do_otwarcia);
-}
+
+    }
 
 
 void Skalka::on_zapisz_clicked()
 {
     int index = dataManager::instance().wszystkie_skalki.indexOf(this);
+    qDebug()<<"zaczęto zapis";
 
     QTableWidgetItem* itemNazwa       = ui->tabela->item(0, 1);
     QTableWidgetItem* itemWysokosc    = ui->tabela->item(1, 1);
     QTableWidgetItem* itemRodzajSkaly = ui->tabela->item(2, 1);
     QTableWidgetItem* itemWspolrzedne = ui->tabela->item(3, 1);
 
-    ::Skalka *daneWMemore = dataManager::instance().wszystkie_skalki[index];
+    qDebug()<<"wczytano z tabeli";
+
+    ::Skalka *daneWMemore = nullptr;
+
+    // BEZPIECZNE SPRAWDZENIE INDEKSU:
+    if (index >= 0 && index <= dataManager::instance().wszystkie_skalki.size())
+    {
+
+        daneWMemore = dataManager::instance().wszystkie_skalki[index];
+    }
+    else
+    {
+        usun = true;
+        daneWMemore = this;
+        dataManager::instance().wszystkie_skalki.append(this);
+    }
+    qDebug()<<"danewmwmore";
     // 3. Przypisujemy wartości do obiektu (z bezpiecznym sprawdzeniem, czy komórki nie są puste)
     if (itemNazwa) {
         this->nazwa = itemNazwa->text();
@@ -137,17 +158,20 @@ void Skalka::on_zapisz_clicked()
     if (itemWspolrzedne) {
         this->wspolrzedne = itemWspolrzedne->text();
     }
+    qDebug()<<"przeddanewmemore";
     if (daneWMemore) {
         // Aktualizujemy dane w pamięci RAM
         daneWMemore->nazwa = this->nazwa;
         daneWMemore->wysokosc = this->wysokosc;
         daneWMemore->rodzaj_skaly =this->rodzaj_skaly;
         daneWMemore->wspolrzedne = this->wspolrzedne;
+        qDebug()<<"przed zdjęciem";
         daneWMemore->sciezka_zdjecia = this->sciezka_zdjecia;
-
-        // 3. Zapisujemy zaktualizowaną listę do pliku bazy danych
+    qDebug()<<"po zdjeciu";
         // Używamy funkcji, którą napisaliśmy wcześniej
         DatabaseManager::instance().saveSkalka(dataManager::instance().wszystkie_skalki);
+
+        qDebug()<<"save skalka complete";
 
 
     }}
@@ -221,20 +245,19 @@ void Skalka::obslugaKliknieciaTrasy() {
         QFrame *ramka = ui->daneTrasy;
 
         if (ramka) {
-            // 1. Zabezpieczenie przed crashem (index out of range)
+
             if (indeksWBazie < 0 || indeksWBazie >= this->trasy.size()) return;
 
             Trasa *wybranaTrasa = this->trasy[indeksWBazie];
 
             if (wybranaTrasa != nullptr) {
-                // 2. Jeśli ramka nie ma layoutu, tworzymy go dynamicznie w C++
+
                 if (ramka->layout() == nullptr) {
                     QVBoxLayout *nowyLayout = new QVBoxLayout(ramka);
                     nowyLayout->setContentsMargins(0, 0, 0, 0);
                     ramka->setLayout(nowyLayout);
                 }
 
-                // 3. Czyścimy ramkę z poprzednio otwartej trasy, żeby widoki się nie nakładały
                 QLayoutItem *item;
                 while ((item = ramka->layout()->takeAt(0)) != nullptr) {
                     if (item->widget()) {
@@ -243,18 +266,15 @@ void Skalka::obslugaKliknieciaTrasy() {
                     delete item;
                 }
 
-                // 4. Konfiguracja i wstrzyknięcie trasy do ramki
                 wybranaTrasa->setWindowFlags(Qt::Widget);
                 wybranaTrasa->setParent(ramka);
 
                 wybranaTrasa->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
                 wybranaTrasa->setMinimumSize(0, 0);
 
-                // Wywołanie Twojego Nawigatora
                 Nawigator n;
                 n.openInFrameTrasa(ramka, wybranaTrasa);
 
-                // JAWNE DODANIE DO LAYOUTU (To sprawi, że trasa się pokaże)
                 ramka->layout()->addWidget(wybranaTrasa);
 
                 wybranaTrasa->show();

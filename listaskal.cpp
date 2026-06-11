@@ -56,6 +56,7 @@ void ListaSkal::obslugaKliknieciaSkalki()
                 Nawigator n;
                 n.openWidget(glowneOkno, ekranSkalki);
                 ekranSkalki->odpal_trasy(ekranSkalki);
+
             }
         }
     }

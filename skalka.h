@@ -21,6 +21,7 @@ public:
     explicit Skalka(QWidget *parent = nullptr);
     ~Skalka();
     QString sciezka_zdjecia;
+    bool usun = false;
     QString nazwa = "";
     QString wspolrzedne;
     QString rodzaj_skaly;

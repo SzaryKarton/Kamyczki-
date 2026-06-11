@@ -217,6 +217,8 @@ void DatabaseManager::loadProfile()
 }
 
 void DatabaseManager::saveSkalka(const QVector<Skalka*>& listaSkalek) {
+
+
     QSqlQuery query;
 
     query.exec("DELETE FROM skalki");
@@ -255,11 +257,19 @@ void DatabaseManager::saveSkalka(const QVector<Skalka*>& listaSkalek) {
             if (!query.exec()) {
                 qDebug() << "Błąd zapisu trasy:" << query.lastError().text();
             }
+            if (db.commit()) {
+                qDebug() << "Zapisano pomyślnie wszystkie skałki i ich drogi do bazy!";
+            } //else {
+                //qDebug() << "Błąd transakcji (Commit):" << db.lastError().text();
+               // db.rollback(); // Wycofaj w razie błędu, nie blokuj bazy
+           // }
         }
     }
 
     qDebug() << "Zapisano skałki i trasy.";
     query.clear();
+
+
 }
 
 

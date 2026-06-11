@@ -19,11 +19,17 @@ private:
     Ui::Mapa *ui;
 
 private slots:
-    void on_backButton_clicked();
+    void on_backButton_clicked();/*
     void on_skalka1_Button_clicked();
     void on_skalka2_Button_clicked();
     void on_skalka3_Button_clicked();
-    void on_skalka4_Button_clicked();
+    void on_skalka4_Button_clicked();*/
+protected:
+    void showEvent(QShowEvent *event) override;
+
+private slots:
+    void obslugaKliknieciaPinu();
+
 };
 
 #endif // MAPA_H

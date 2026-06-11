@@ -94,6 +94,11 @@ background-color: rgb(88, 127, 70);</string>
     <string>Powrót</string>
    </property>
   </widget>
+  <zorder>skalka3_Button</zorder>
+  <zorder>skalka1_Button</zorder>
+  <zorder>skalka4_Button</zorder>
+  <zorder>skalka2_Button</zorder>
+  <zorder>backButton</zorder>
  </widget>
  <resources/>
  <connections/>
